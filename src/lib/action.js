@@ -4,12 +4,13 @@ import { connectDb, convertToFile } from "./utils";
 import { Employee } from "./models";
 
 const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
+
 let employeeSchema = z.object({
   image: z.string(""),
   name: z
     .string("Please fill this field")
-    .min(3, "First name is too short")
-    .max(32, "First name is too long"),
+    .min(3, "Name is too short")
+    .max(32, "Name is too long"),
 
   email: z
     .string("Please fill this field")
@@ -17,8 +18,9 @@ let employeeSchema = z.object({
     .min(5, "Value is too short"),
   mobile: z
     .string("Please fill this field")
-    .min(10, "Value is too short")
-    .min(10, "Value is too long"),
+    .min(10, "Please enter a valid number")
+    .max(10, "Please enter a valid number")
+    .regex(/^[0-9]+$/, "Please enter a valid number"),
   designation: z.string("Please fill this field").min(2, "Value is too short"),
   gender: z.string("Please fill this field"),
   course: z.string("Please fill this field").min(1, "Course is required"),
@@ -90,7 +92,7 @@ export async function createEmpoyee(prevState, formData) {
 
     await newEmployee.save();
     return {
-      errors: null,
+      success: true,
       message: "success",
     };
   } catch (error) {
@@ -104,7 +106,6 @@ export async function updateEmpoyee(id, prevState, formData) {
   const validateEmpData = employeeSchema.safeParse(employee);
 
   if (!validateEmpData.success) {
-    console.log(validateEmpData.error.flatten().fieldErrors);
     return {
       errors: validateEmpData.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to create employee.",
@@ -142,18 +143,23 @@ export async function updateEmpoyee(id, prevState, formData) {
     );
     const parsed = await response.json();
     validateEmpData.data.image = parsed.url;
-    const updateEmployee = await Employee.findByIdAndUpdate(
-      id,
-      validateEmpData.data,
-      { new: true }
-    );
+
+    await Employee.findByIdAndUpdate(id, validateEmpData.data);
 
     return {
-      errors: null,
+      success: true,
       message: "success",
     };
   } catch (error) {
     // Fix "Error: NEXT_REDIRECT" next.js shows this error if you do any furthur actions like console log after signIn.
     throw error;
+  }
+}
+
+export async function deleteEmpoyee(id) {
+  try {
+    await Employee.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
   }
 }

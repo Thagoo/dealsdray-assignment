@@ -9,6 +9,7 @@ import Cropper from "react-cropper";
 import Modal from "@/ui/modal";
 import "cropperjs/dist/cropper.css";
 import LoadingSpinner from "@/ui/loading-spinner";
+import { redirect } from "next/navigation";
 
 export default function EditEmpoyeeForm({ employeeData }) {
   // To reset form errors
@@ -67,6 +68,10 @@ export default function EditEmpoyeeForm({ employeeData }) {
   useEffect(() => {
     if (state.errors) {
       setValidationError(state);
+    }
+    if (state.success) {
+      window.alert("Employee has been updated");
+      redirect("/dashboard");
     }
   }, [state]);
 
@@ -280,7 +285,7 @@ export default function EditEmpoyeeForm({ employeeData }) {
                     ))}
                 </div>
                 <div>
-                  <fieldset className="w-full flex gap-8 my-10">
+                  <fieldset className="w-full flex gap-8 ">
                     <p>Course</p>
 
                     <div className="pl-10">
@@ -317,8 +322,8 @@ export default function EditEmpoyeeForm({ employeeData }) {
                       <label for="bsc">BSc</label>
                     </div>
                   </fieldset>
-                  {validationError.errors?.gender &&
-                    validationError.errors.gender.map((error) => (
+                  {validationError.errors?.course &&
+                    validationError.errors.course.map((error) => (
                       <p className="mt-2 text-sm text-red-500" key={error}>
                         {error}
                       </p>

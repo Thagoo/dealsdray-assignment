@@ -26,7 +26,7 @@ export default function CreateEmpoyeeForm() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const cropperRef = useRef(null);
-
+  const formRef = useRef(null);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -65,9 +65,9 @@ export default function CreateEmpoyeeForm() {
     if (state.errors) {
       setValidationError(state);
     }
-    if (state.message == "success") {
+    if (state.success) {
       window.alert("Employee has been created");
-      redirect("/dashboard");
+      formRef.current.reset();
     }
   }, [state]);
 
@@ -111,7 +111,7 @@ export default function CreateEmpoyeeForm() {
             ref={inputFile}
             onChange={handleImageSelection}
           />
-          <form action={formAction} className="text-center">
+          <form action={formAction} className="text-center" ref={formRef}>
             <div className="py-2 flex">
               <div className="py-2 w-1/3 flex flex-col items-center ">
                 <Image
@@ -266,7 +266,7 @@ export default function CreateEmpoyeeForm() {
                     ))}
                 </div>
                 <div>
-                  <fieldset className="w-full flex gap-8 my-10">
+                  <fieldset className="w-full flex gap-8 ">
                     <p>Course</p>
 
                     <div className="pl-10">
@@ -303,8 +303,8 @@ export default function CreateEmpoyeeForm() {
                       <label for="bsc">BSc</label>
                     </div>
                   </fieldset>
-                  {validationError.errors?.gender &&
-                    validationError.errors.gender.map((error) => (
+                  {validationError.errors?.course &&
+                    validationError.errors.course.map((error) => (
                       <p className="mt-2 text-sm text-red-500" key={error}>
                         {error}
                       </p>

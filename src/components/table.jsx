@@ -8,6 +8,7 @@ import TableSearchInput from "@/ui/table-search";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
+import { deleteEmpoyee } from "@/lib/action";
 
 const employeeDataHeaders = [
   "Unique ID",
@@ -24,23 +25,33 @@ const employeeDataHeaders = [
 export default function EmployeeTable({ employeeData }) {
   // const paginatedEmployeeData: PaginatedEmployeeData = generatePagination(employeeData);
 
-  const [data, setData] = useState(employeeData);
+  const [employees, setEmployees] = useState(employeeData);
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const router = useRouter();
 
-  const handleWeather = () => {
-    e.preventDefault();
+  const handleDeleteEmployee = async (id) => {
+    await deleteEmpoyee(id);
+    router.refresh();
   };
 
   useEffect(() => {
-    if (searchTerm?.length < 3) {
-      setData(employeeData);
-    } else {
-      const filteredData = deepSearch(data, searchTerm);
+    router.refresh();
+  }, []);
 
-      setData(filteredData);
+  useEffect(() => {
+    setEmployees(employeeData);
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (searchTerm?.length < 3) {
+      setEmployees(employeeData);
+    } else {
+      const filteredData = employeeData.filter((emp) =>
+        emp.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setEmployees(filteredData);
     }
   }, [searchTerm]);
 
@@ -48,11 +59,11 @@ export default function EmployeeTable({ employeeData }) {
     <>
       <div className="flex justify-between px-2 mb-2 ">
         <div className="flex justify-between w-full">
-          <h1 className="hidden md:block text-lg text-accent-foreground">
+          <h1 className="hidden md:block text-lg text-accent-foreground font-semibold">
             Employees
           </h1>
           <div className="flex gap-4">
-            <h1 className="hidden md:block text-lg text-accent-foreground">
+            <h1 className="hidden md:block text-lg text-accent-foreground font-semibold">
               Total Count: {employeeData.length}
             </h1>
             <Link href="/dashboard/create">
@@ -85,7 +96,7 @@ export default function EmployeeTable({ employeeData }) {
           </thead>
 
           <tbody className=" overflow-auto">
-            {data.map((item, i) => (
+            {employees.map((item, i) => (
               <tr
                 key={i}
                 className="border-b bg-background border border-accent cursor-pointer"
@@ -114,7 +125,10 @@ export default function EmployeeTable({ employeeData }) {
                   >
                     Edit
                   </Link>
-                  <button className="bg-red-600 py-1 px-2 rounded-md text-white hover:bg-red-400">
+                  <button
+                    className="bg-red-600 py-1 px-2 rounded-md text-white hover:bg-red-400"
+                    onClick={() => handleDeleteEmployee(item._id)}
+                  >
                     Delete
                   </button>
                 </td>
@@ -122,17 +136,12 @@ export default function EmployeeTable({ employeeData }) {
             ))}
           </tbody>
         </table>
-        {data.length < 1 && (
+        {employees.length < 1 && (
           <div className="h-56 w-full flex justify-center items-center">
             <span>No data found</span>
           </div>
         )}
       </div>
-      {/* <Pagination
-        totalPages={paginatedCityData.totalPages}
-        page={page}
-        setPage={setPage}
-      /> */}
     </>
   );
 }
