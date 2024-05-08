@@ -9,3 +9,9 @@ export async function createEmpoyee(prevState, formData) {
   console.log(employee);
   return { ...prevState, errors: null };
 }
+
+export async function updateEmpoyee(prevState, formData) {
+  const employee = Object.fromEntries(formData);
+  console.log(employee);
+  return { ...prevState, errors: null };
+}

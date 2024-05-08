@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { createEmpoyee } from "@/lib/action";
+import { updateEmpoyee } from "@/lib/action";
 import { useFormState, useFormStatus } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -10,13 +10,16 @@ import Modal from "@/ui/modal";
 import "cropperjs/dist/cropper.css";
 import LoadingSpinner from "@/ui/loading-spinner";
 
-export default function CreateEmpoyeeForm() {
+export default function EditEmpoyeeForm({ employeeData }) {
   // To reset form errors
   const [validationError, setValidationError] = useState({});
 
   const initialState = { errors: {}, message: {} };
 
-  const [state, formAction] = useFormState(createEmpoyee, initialState);
+  const [state, formAction] = useFormState(updateEmpoyee, initialState);
+
+  const [gender, setGender] = useState(employeeData.gender);
+  const [course, setCourse] = useState(employeeData.course);
 
   const inputFile = useRef(null);
   const [srcImage, setSrcImage] = useState();
@@ -144,6 +147,7 @@ export default function CreateEmpoyeeForm() {
                     placeholder="Enter Name"
                     onChange={handleResetValidationErrors}
                     required
+                    defaultValue={employeeData.name}
                   />
 
                   {validationError.errors?.name &&
@@ -167,6 +171,7 @@ export default function CreateEmpoyeeForm() {
                     placeholder="Enter Email"
                     onChange={handleResetValidationErrors}
                     required
+                    defaultValue={employeeData.email}
                   />
 
                   {validationError.errors?.email &&
@@ -190,6 +195,7 @@ export default function CreateEmpoyeeForm() {
                     placeholder="Enter Mobile No."
                     onChange={handleResetValidationErrors}
                     required
+                    defaultValue={employeeData.mobile}
                   />
 
                   {validationError.errors?.mobile &&
@@ -205,6 +211,7 @@ export default function CreateEmpoyeeForm() {
                     name="designation"
                     id="designation"
                     required
+                    defaultValue={employeeData.designation}
                     className={`border-2 ${
                       validationError?.errors?.name
                         ? "border-red-300"
@@ -228,7 +235,7 @@ export default function CreateEmpoyeeForm() {
                     ))}
                 </div>
                 <div>
-                  <fieldset className=" flex gap-8 my-10">
+                  <fieldset className="flex gap-8 my-10">
                     <p>Gender</p>
 
                     <div className="pl-10 text-center">
@@ -237,6 +244,8 @@ export default function CreateEmpoyeeForm() {
                         id="male"
                         name="gender"
                         value="male"
+                        checked={gender === "male"}
+                        onChange={(e) => setGender(e.target.value)}
                       />
                       <label for="male">Male</label>
                     </div>
@@ -247,6 +256,8 @@ export default function CreateEmpoyeeForm() {
                         id="female"
                         name="gender"
                         value="female"
+                        checked={gender === "female"}
+                        onChange={(e) => setGender(e.target.value)}
                       />
                       <label for="female">Female</label>
                     </div>
@@ -263,15 +274,36 @@ export default function CreateEmpoyeeForm() {
                     <p>Course</p>
 
                     <div className="pl-10">
-                      <input type="checkbox" id="mca" value="mca" />
+                      <input
+                        type="checkbox"
+                        id="mca"
+                        name="course"
+                        value="mca"
+                        checked={course === "mca"}
+                        onChange={(e) => setCourse(e.target.value)}
+                      />
                       <label for="mca">MCA</label>
                     </div>
                     <div>
-                      <input type="checkbox" id="bca" value="bca" />
+                      <input
+                        type="checkbox"
+                        id="bca"
+                        value="bca"
+                        name="course"
+                        checked={course === "bca"}
+                        onChange={(e) => setCourse(e.target.value)}
+                      />
                       <label for="bca">BCA</label>
                     </div>
                     <div>
-                      <input type="checkbox" id="bsc" value="bsc" />
+                      <input
+                        type="checkbox"
+                        id="bsc"
+                        value="bsc"
+                        name="course"
+                        checked={course === "bsc"}
+                        onChange={(e) => setCourse(e.target.value)}
+                      />
                       <label for="bsc">BSc</label>
                     </div>
                   </fieldset>

@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Header() {
   return (
-    <div className="flex w-full gap-32 items-center">
+    <div className="flex w-full gap-32 items-center pb-10">
       <Link href="/" className="hover:underline">
         <span className="text-2xl text-slate-700 font-semibold">Dealsdray</span>
       </Link>
