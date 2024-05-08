@@ -1,7 +1,8 @@
 "use server";
 import z from "zod";
 import { connectDb, convertToFile } from "./utils";
-import { Employee } from "./models";
+import { Admin, Employee } from "./models";
+import { signIn } from "./auth";
 
 const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 
@@ -42,15 +43,39 @@ const loginSchema = z.object({
 
 export async function login(prevState, formData) {
   const credentials = Object.fromEntries(formData);
+  const validateData = loginSchema.safeParse(credentials);
 
-  return { ...prevState, errors: null };
+  if (!validateData.success) {
+    return {
+      errors: validateData.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to create employee.",
+    };
+  }
+
+  try {
+    await connectDb();
+    const admin = await Admin.findOne({
+      username: validateData.data.username,
+    });
+
+    if (!admin) {
+      // Matching zod's practice
+      return { errors: { username: ["Username does not exist"] } };
+    }
+
+    if (admin.password !== validateData.data.password) {
+      return { errors: { password: ["Password Does not match"] } };
+    }
+    await signIn("credentials", validateData.data);
+  } catch (error) {
+    throw error;
+  }
 }
 export async function createEmpoyee(prevState, formData) {
   const employee = Object.fromEntries(formData);
   const validateEmpData = employeeSchema.safeParse(employee);
 
   if (!validateEmpData.success) {
-    console.log(validateEmpData.error.flatten().fieldErrors);
     return {
       errors: validateEmpData.error.flatten().fieldErrors,
       message: "Missing Fields. Failed to create employee.",

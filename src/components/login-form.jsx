@@ -13,7 +13,7 @@ export default function LoginForm() {
   const [state, formAction] = useFormState(login, initialState);
 
   useEffect(() => {
-    if (state.errors) {
+    if (state?.errors) {
       setValidationError(state);
     }
   }, [state]);
