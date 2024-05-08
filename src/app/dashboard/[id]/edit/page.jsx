@@ -1,16 +1,13 @@
 import EditEmpoyeeForm from "@/components/dashboard/edit-emploee-form";
+import { fetchEmployeeById } from "@/lib/data";
 
-const employee = {
-  image: "lmao",
-  name: "lol",
-  email: "lol@gmail.com",
-  mobile: 20320984,
-  gender: "male",
-  designation: "hr",
-  course: "bca",
-};
+export default async function Edit({ params }) {
+  const { id } = params;
+  const employee = await fetchEmployeeById(id);
 
-export default function Edit() {
+  if (!employee) {
+    return;
+  }
   return (
     <div>
       <EditEmpoyeeForm employeeData={employee} />

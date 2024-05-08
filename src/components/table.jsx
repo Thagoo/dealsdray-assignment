@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import TableSearchInput from "@/ui/table-search";
 import Link from "next/link";
+import Image from "next/image";
+import { formatDate } from "@/lib/utils";
 
 const employeeDataHeaders = [
   "Unique ID",
@@ -89,14 +91,22 @@ export default function EmployeeTable({ employeeData }) {
                 className="border-b bg-background border border-accent cursor-pointer"
               >
                 <td className="px-4 py-4">{item._id}</td>
-                <td className="px-4 py-4">{item.image}</td>
+                <td className="px-4 py-4">
+                  <Image
+                    src={item.image || "/assets/no-avatar.svg"}
+                    alt="avatar logo"
+                    width={40}
+                    height={24}
+                    className="rounded-full p-1 mr-2"
+                  />
+                </td>
                 <td className="px-4 py-4">{item.name}</td>
                 <td className="px-4 py-4">{item.email}</td>
                 <td className="px-4 py-4">{item.mobile}</td>
                 <td className="px-4 py-4">{item.designation}</td>
                 <td className="px-4 py-4">{item.gender}</td>
                 <td className="px-4 py-4">{item.course}</td>
-                <td className="px-4 py-4">{item.created}</td>
+                <td className="px-4 py-4">{formatDate(item.createdAt)}</td>
                 <td className="px-4 py-4 gap-2 flex">
                   <Link
                     href={`/dashboard/${item._id}/edit`}

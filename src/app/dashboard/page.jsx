@@ -1,20 +1,12 @@
 import EmployeeTable from "@/components/table";
+import { fetchEmployees } from "@/lib/data";
 
-export default function Home() {
-  const employee = [
-    {
-      image: "lmao",
-      name: "lol",
-      email: "lol@gmail.com",
-      mobile: 20320984,
-      gender: "male",
-      designation: "hr",
-      course: "bca",
-    },
-  ];
+export default async function Home() {
+  const employees = await fetchEmployees();
+
   return (
     <div>
-      <EmployeeTable employeeData={employee} />
+      <EmployeeTable employeeData={employees} />
     </div>
   );
 }

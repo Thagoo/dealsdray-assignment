@@ -9,6 +9,7 @@ import Cropper from "react-cropper";
 import Modal from "@/ui/modal";
 import "cropperjs/dist/cropper.css";
 import LoadingSpinner from "@/ui/loading-spinner";
+import { redirect } from "next/navigation";
 
 export default function CreateEmpoyeeForm() {
   // To reset form errors
@@ -17,7 +18,7 @@ export default function CreateEmpoyeeForm() {
   const initialState = { errors: {}, message: {} };
 
   const [state, formAction] = useFormState(createEmpoyee, initialState);
-
+  const [course, setCourse] = useState("");
   const inputFile = useRef(null);
   const [srcImage, setSrcImage] = useState();
   const [croppedImage, setCroppedImage] = useState("");
@@ -63,6 +64,10 @@ export default function CreateEmpoyeeForm() {
   useEffect(() => {
     if (state.errors) {
       setValidationError(state);
+    }
+    if (state.message == "success") {
+      window.alert("Employee has been created");
+      redirect("/dashboard");
     }
   }, [state]);
 
@@ -120,8 +125,8 @@ export default function CreateEmpoyeeForm() {
 
                 <input
                   type="type"
-                  id="avatar"
-                  name="avatar"
+                  id="image"
+                  name="image"
                   className="hidden"
                   value={croppedImage}
                 />
@@ -130,96 +135,23 @@ export default function CreateEmpoyeeForm() {
               </div>
 
               <div className="flex-col w-[60%] space-y-4">
-                <div className="flex items-center justify-between">
-                  <label for="name">Name </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className={`border-2 ${
-                      validationError?.errors?.name
-                        ? "border-red-300"
-                        : "border-gray-100"
-                    } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
-                    placeholder="Enter Name"
-                    onChange={handleResetValidationErrors}
-                    required
-                  />
-
-                  {validationError.errors?.name &&
-                    validationError.errors.name.map((error) => (
-                      <p className="mt-2 text-sm text-red-500" key={error}>
-                        {error}
-                      </p>
-                    ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <label for="email">Email </label>
-                  <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    className={`border-2 ${
-                      validationError?.errors?.email
-                        ? "border-red-300"
-                        : "border-gray-100"
-                    } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
-                    placeholder="Enter Email"
-                    onChange={handleResetValidationErrors}
-                    required
-                  />
-
-                  {validationError.errors?.email &&
-                    validationError.errors.email.map((error) => (
-                      <p className="mt-2 text-sm text-red-500" key={error}>
-                        {error}
-                      </p>
-                    ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <label for="mobile">Mobile </label>
-                  <input
-                    type="number"
-                    id="mobile"
-                    name="mobile"
-                    className={`border-2 ${
-                      validationError?.errors?.mobile
-                        ? "border-red-300"
-                        : "border-gray-100"
-                    } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
-                    placeholder="Enter Mobile No."
-                    onChange={handleResetValidationErrors}
-                    required
-                  />
-
-                  {validationError.errors?.mobile &&
-                    validationError.errors.mobile.map((error) => (
-                      <p className="mt-2 text-sm text-red-500" key={error}>
-                        {error}
-                      </p>
-                    ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <label for="designation">Designation </label>
-                  <select
-                    name="designation"
-                    id="designation"
-                    required
-                    className={`border-2 ${
-                      validationError?.errors?.name
-                        ? "border-red-300"
-                        : "border-gray-100"
-                    } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
-                  >
-                    {" "}
-                    <option value="" disabled>
-                      Select Designation
-                    </option>
-                    <option value="hr">HR</option>
-                    <option value="manager">Manager</option>
-                    <option value="Sales">Sales</option>
-                  </select>
-
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label for="name">Name </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      className={`border-2 ${
+                        validationError?.errors?.name
+                          ? "border-red-300"
+                          : "border-gray-100"
+                      } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
+                      placeholder="Enter Name"
+                      onChange={handleResetValidationErrors}
+                      required
+                    />
+                  </div>
                   {validationError.errors?.name &&
                     validationError.errors.name.map((error) => (
                       <p className="mt-2 text-sm text-red-500" key={error}>
@@ -228,7 +160,82 @@ export default function CreateEmpoyeeForm() {
                     ))}
                 </div>
                 <div>
-                  <fieldset className=" flex gap-8 my-10">
+                  <div className="flex items-center justify-between">
+                    <label for="email">Email </label>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      className={`border-2 ${
+                        validationError?.errors?.email
+                          ? "border-red-300"
+                          : "border-gray-100"
+                      } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
+                      placeholder="Enter Email"
+                      onChange={handleResetValidationErrors}
+                      required
+                    />
+                  </div>
+                  {validationError.errors?.email &&
+                    validationError.errors.email.map((error) => (
+                      <p className="mt-2 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                    ))}
+                </div>
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label for="mobile">Mobile </label>
+                    <input
+                      type="text"
+                      id="mobile"
+                      name="mobile"
+                      className={`border-2 ${
+                        validationError?.errors?.mobile
+                          ? "border-red-300"
+                          : "border-gray-100"
+                      } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
+                      placeholder="Enter Mobile No."
+                      onChange={handleResetValidationErrors}
+                      required
+                    />
+                  </div>
+                  {validationError.errors?.mobile &&
+                    validationError.errors.mobile.map((error) => (
+                      <p className="mt-2 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                    ))}
+                </div>
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label for="designation">Designation </label>
+                    <select
+                      name="designation"
+                      id="designation"
+                      required
+                      className={`border-2 ${
+                        validationError?.errors?.designation
+                          ? "border-red-300"
+                          : "border-gray-100"
+                      } focus:outline-none w-3/4 block py-2 px-4 rounded-lg focus:border-gray-700 focus:border-[1px] `}
+                    >
+                      {" "}
+                      <option value="">Select Designation</option>
+                      <option value="hr">HR</option>
+                      <option value="manager">Manager</option>
+                      <option value="Sales">Sales</option>
+                    </select>
+                  </div>
+                  {validationError.errors?.designation &&
+                    validationError.errors.designation.map((error) => (
+                      <p className="mt-2 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                    ))}
+                </div>
+                <div>
+                  <fieldset className="flex gap-8 my-10">
                     <p>Gender</p>
 
                     <div className="pl-10 text-center">
@@ -263,15 +270,36 @@ export default function CreateEmpoyeeForm() {
                     <p>Course</p>
 
                     <div className="pl-10">
-                      <input type="checkbox" id="mca" value="mca" />
+                      <input
+                        type="checkbox"
+                        id="mca"
+                        name="course"
+                        value="mca"
+                        checked={course === "mca"}
+                        onChange={(e) => setCourse(e.target.value)}
+                      />
                       <label for="mca">MCA</label>
                     </div>
                     <div>
-                      <input type="checkbox" id="bca" value="bca" />
+                      <input
+                        type="checkbox"
+                        id="bca"
+                        value="bca"
+                        name="course"
+                        checked={course === "bca"}
+                        onChange={(e) => setCourse(e.target.value)}
+                      />
                       <label for="bca">BCA</label>
                     </div>
                     <div>
-                      <input type="checkbox" id="bsc" value="bsc" />
+                      <input
+                        type="checkbox"
+                        id="bsc"
+                        value="bsc"
+                        name="course"
+                        checked={course === "bsc"}
+                        onChange={(e) => setCourse(e.target.value)}
+                      />
                       <label for="bsc">BSc</label>
                     </div>
                   </fieldset>

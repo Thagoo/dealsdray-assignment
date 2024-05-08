@@ -28,7 +28,7 @@ export const connectDb = async () => {
       })
       .once("open", () => {
         mongoConnetion.connected = mongoose.connections[0].readyState;
-        console.log("connected to DB!");
+        console.info("connected to DB!");
       });
   } catch (error) {
     console.log(error);
@@ -68,4 +68,9 @@ export const convertToFile = async (base64str) => {
   blob.name = "image";
 
   return blob;
+};
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString();
 };
