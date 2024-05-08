@@ -59,24 +59,24 @@ export default function EmployeeTable({ employeeData }) {
     <>
       <div className="flex justify-between px-2 mb-2 ">
         <div className="flex justify-between w-full">
-          <h1 className="hidden md:block text-lg text-accent-foreground font-semibold">
+          <h1 className="hidden md:block text-xl text-accent-foreground font-semibold">
             Employees
           </h1>
+          <TableSearchInput
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
           <div className="flex gap-4">
             <h1 className="hidden md:block text-lg text-accent-foreground font-semibold">
               Total Count: {employeeData.length}
             </h1>
+
             <Link href="/dashboard/create">
               <span className="bg-slate-800 rounded-md py-2 px-4 text-white hover:bg-slate-700">
                 Create Employee
               </span>
             </Link>
           </div>
-
-          <TableSearchInput
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-          />
         </div>
       </div>
       <div className="w-full max-h-screen overflow-x-auto space-y-2">

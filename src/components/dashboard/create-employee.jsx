@@ -68,6 +68,8 @@ export default function CreateEmpoyeeForm() {
     if (state.success) {
       window.alert("Employee has been created");
       formRef.current.reset();
+      setCroppedImage(null);
+      setCourse(null);
     }
   }, [state]);
 
@@ -235,7 +237,7 @@ export default function CreateEmpoyeeForm() {
                     ))}
                 </div>
                 <div>
-                  <fieldset className="flex gap-8 my-10">
+                  <fieldset className="flex gap-8">
                     <p>Gender</p>
 
                     <div className="pl-10 text-center">
@@ -244,6 +246,7 @@ export default function CreateEmpoyeeForm() {
                         id="male"
                         name="gender"
                         value="male"
+                        onChange={handleResetValidationErrors}
                       />
                       <label for="male">Male</label>
                     </div>
@@ -254,6 +257,7 @@ export default function CreateEmpoyeeForm() {
                         id="female"
                         name="gender"
                         value="female"
+                        onChange={handleResetValidationErrors}
                       />
                       <label for="female">Female</label>
                     </div>
@@ -276,7 +280,10 @@ export default function CreateEmpoyeeForm() {
                         name="course"
                         value="mca"
                         checked={course === "mca"}
-                        onChange={(e) => setCourse(e.target.value)}
+                        onChange={(e) => {
+                          handleResetValidationErrors();
+                          setCourse(e.target.value);
+                        }}
                       />
                       <label for="mca">MCA</label>
                     </div>
@@ -287,7 +294,10 @@ export default function CreateEmpoyeeForm() {
                         value="bca"
                         name="course"
                         checked={course === "bca"}
-                        onChange={(e) => setCourse(e.target.value)}
+                        onChange={(e) => {
+                          handleResetValidationErrors();
+                          setCourse(e.target.value);
+                        }}
                       />
                       <label for="bca">BCA</label>
                     </div>
@@ -298,7 +308,10 @@ export default function CreateEmpoyeeForm() {
                         value="bsc"
                         name="course"
                         checked={course === "bsc"}
-                        onChange={(e) => setCourse(e.target.value)}
+                        onChange={(e) => {
+                          handleResetValidationErrors();
+                          setCourse(e.target.value);
+                        }}
                       />
                       <label for="bsc">BSc</label>
                     </div>

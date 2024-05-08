@@ -74,14 +74,6 @@ export default function LoginForm() {
           <Submit />
         </div>
       </form>
-      <div>
-        <p>
-          Don't have an account?{" "}
-          <span className="text-blue-600">
-            <Link href="/register">Register</Link>
-          </span>
-        </p>
-      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Pacifico } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 
@@ -13,8 +13,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex flex-col min-h-screen px-24 py-6">
-          <Header />
+        <div className="flex flex-col min-h-screen px-24 py-2">
+          <Header className="" />
           {children}
         </div>
       </body>

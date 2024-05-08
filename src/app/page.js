@@ -4,10 +4,7 @@ export default function Home() {
   return (
     <>
       <div className="flex-1 flex flex-col justify-center items-center space-y-8">
-        <h1 className="text-2xl font-semibold">
-          {" "}
-          Welcome to DealsDray Dashboard
-        </h1>
+        <h1 className="text-2xl font-semibold"> Welcome to Admin Panel</h1>
 
         <Link
           href={"/dashboard"}

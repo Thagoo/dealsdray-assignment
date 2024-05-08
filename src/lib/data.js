@@ -5,7 +5,7 @@ export async function fetchEmployees() {
   try {
     connectDb();
     const employees = await Employee.find();
-    return employees;
+    return JSON.parse(JSON.stringify(employees));
   } catch (error) {}
 }
 
