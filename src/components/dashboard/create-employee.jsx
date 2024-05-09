@@ -107,7 +107,7 @@ export default function CreateEmpoyeeForm() {
         </div>
       </Modal>
       <div className="flex justify-center">
-        <div className="bg-gray-50 rounded-lg sm:border-2 px-4 lg:px-6 py-10 w-[75%] ">
+        <div className="bg-gray-50 rounded-lg sm:border-2 md:px-4 lg:px-6 py-10 md:w-[75%] ">
           <div className="flex justify-between items-center">
             <div></div>
             <h1 className="text-2xl">Create Employee</h1>
@@ -121,8 +121,8 @@ export default function CreateEmpoyeeForm() {
             onChange={handleImageSelection}
           />
           <form action={formAction} className="text-center" ref={formRef}>
-            <div className="py-2 flex">
-              <div className="py-2 w-1/3 flex flex-col items-center ">
+            <div className="py-2 flex flex-col md:flex-row ">
+              <div className="py-2 w-full md:w-1/3 flex flex-col items-center ">
                 <Image
                   src={croppedImage || "/assets/no-avatar.svg"}
                   alt="avatar logo"
@@ -143,7 +143,7 @@ export default function CreateEmpoyeeForm() {
                 <p className="text-sm text-gray-900">Profile Picture</p>
               </div>
 
-              <div className="flex-col w-[60%] space-y-4">
+              <div className="flex-col w-full md:w-[60%] space-y-4">
                 <div>
                   <div className="flex items-center justify-between">
                     <label for="name">Name </label>

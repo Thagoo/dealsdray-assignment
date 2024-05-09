@@ -2,7 +2,6 @@
 import { login } from "@/lib/action";
 import LoadingSpinner from "@/ui/loading-spinner";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 

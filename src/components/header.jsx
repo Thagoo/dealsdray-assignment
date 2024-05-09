@@ -9,21 +9,23 @@ export default async function Header() {
   const session = await auth();
 
   return (
-    <div className="flex w-full gap-10 items-center px-24 py-4 bg-slate-800 drop-shadow-md shadow-black">
+    <div className="flex w-full gap-2 md:gap-10 items-center px-2 py-2 md:px-24 md:py-4 bg-slate-800 drop-shadow-md shadow-black">
       <Link href="/" className={pacifico.className}>
-        <span className="text-4xl font-semibold text-white">Dealsdray</span>
+        <span className="text-xl md:text-4xl font-semibold text-white">
+          Dealsdray
+        </span>
       </Link>
       <Link
         href="/dashboard"
         className="hover:bg-slate-700 px-4 py-2 rounded-md"
       >
-        <span className="text-lg uppercase font-light text-white">
+        <span className="text-xs md:text-lg uppercase font-light text-white">
           Dashboard
         </span>
       </Link>
       {session?.user.username && (
-        <div className="flex gap-8 ml-auto items-center">
-          <div className="flex items-center">
+        <div className="flex ml-auto items-center">
+          <div className="flex flex-col md:flex-row items-center">
             <Image
               src={"/assets/no-avatar.svg"}
               alt="avatar logo"
@@ -41,8 +43,8 @@ export default async function Header() {
               await signOut();
             }}
           >
-            <button className="flex  grow items-center justify-center gap-2 rounded-md bg-gray-50 text-sm font-medium hover:bg-sky-100 hover:text-slate-800 md:flex-none md:justify-start md:p-2 md:px-3">
-              <div className="hidden md:block">Sign Out</div>
+            <button className="flex items-center justify-center gap-2 rounded-md bg-gray-50 text-xs px-2 py-2 md:text-sm font-medium hover:bg-sky-100 hover:text-slate-800 md:flex-none md:justify-start md:p-2 md:px-3">
+              <div>Sign Out</div>
             </button>
           </form>
         </div>

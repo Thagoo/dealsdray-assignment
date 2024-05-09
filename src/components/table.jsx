@@ -57,8 +57,8 @@ export default function EmployeeTable({ employeeData }) {
 
   return (
     <>
-      <div className="flex justify-between px-2 mb-2">
-        <div className="flex justify-between w-full">
+      <div className="flex justify-between md:px-2 mb-2">
+        <div className="flex justify-between w-full gap-1">
           <h1 className="hidden md:block text-xl text-accent-foreground font-semibold">
             Employees
           </h1>
@@ -66,13 +66,13 @@ export default function EmployeeTable({ employeeData }) {
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
           />
-          <div className="flex gap-4">
+          <div className="flex md:gap-4 items-center">
             <h1 className="hidden md:block text-lg text-accent-foreground font-semibold">
               Total Count: {employeeData.length}
             </h1>
 
             <Link href="/dashboard/create">
-              <span className="bg-slate-800 rounded-md py-2 px-4 text-white hover:bg-slate-700">
+              <span className="bg-slate-800 rounded-md py-2 px-2 whitespace-nowrap text-xs md:text-md text-white hover:bg-slate-700">
                 Create Employee
               </span>
             </Link>

@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <div className="px-24 py-2 flex-grow">{children}</div>
+          <div className="px-2 md:px-24 py-2 flex-grow">{children}</div>
           <Footer />
         </div>
       </body>
