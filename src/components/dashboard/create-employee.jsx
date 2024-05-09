@@ -16,9 +16,10 @@ export default function CreateEmpoyeeForm() {
   const [validationError, setValidationError] = useState({});
 
   const initialState = { errors: {}, message: {} };
-
+  const [autoReset, SetAutoReset] = useState(false);
   const [state, formAction] = useFormState(createEmpoyee, initialState);
   const [course, setCourse] = useState("");
+
   const inputFile = useRef(null);
   const [srcImage, setSrcImage] = useState();
   const [croppedImage, setCroppedImage] = useState("");
@@ -67,9 +68,11 @@ export default function CreateEmpoyeeForm() {
     }
     if (state.success) {
       window.alert("Employee has been created");
-      formRef.current.reset();
-      setCroppedImage(null);
-      setCourse(null);
+      if (autoReset) {
+        formRef.current.reset();
+        setCroppedImage(null);
+        setCourse(null);
+      }
     }
   }, [state]);
 
@@ -104,8 +107,12 @@ export default function CreateEmpoyeeForm() {
         </div>
       </Modal>
       <div className="flex justify-center">
-        <div className="bg-gray-50  rounded-lg sm:border-2 px-4 lg:px-6 py-10 w-[75%] text-center">
-          <h1 className="text-2xl ">Create Employee</h1>
+        <div className="bg-gray-50 rounded-lg sm:border-2 px-4 lg:px-6 py-10 w-[75%] ">
+          <div className="flex justify-between items-center">
+            <div></div>
+            <h1 className="text-2xl">Create Employee</h1>
+            <AutoReset autoReset={autoReset} SetAutoReset={SetAutoReset} />
+          </div>
           <input
             accept="image/*"
             type="file"
@@ -349,5 +356,22 @@ function Submit() {
         <div>Submit</div>
       )}
     </button>
+  );
+}
+
+function AutoReset({ autoReset, SetAutoReset }) {
+  return (
+    <div className="flex gap-2 relative group">
+      auto reset
+      <input
+        type="checkbox"
+        checked={autoReset}
+        onChange={() => SetAutoReset(!autoReset)}
+      />
+      {/* Tooltip */}
+      <span className="tooltip hidden group-hover:block bg-slate-800 text-white font-light text-xs rounded py-1 px-2 absolute -top-10 left-1/2 transform -translate-x-1/2 w-full">
+        Reset Form after submit
+      </span>
+    </div>
   );
 }
