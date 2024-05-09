@@ -98,7 +98,7 @@ export async function createEmpoyee(prevState, formData) {
 
     // Avatar Image parsing
     const avatarData = new FormData();
-    if (employee.image) {
+    if (employee.image.length > 0) {
       const avatar = await convertToFile(employee.image);
       avatarData.append("file", avatar);
       avatarData.append("upload_preset", "upload");

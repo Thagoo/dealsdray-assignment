@@ -1,6 +1,7 @@
 import { Inter, Pacifico } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,9 +14,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex flex-col min-h-screen px-24 py-2">
-          <Header className="" />
-          {children}
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <div className="px-24 py-2 flex-grow">{children}</div>
+          <Footer />
         </div>
       </body>
     </html>

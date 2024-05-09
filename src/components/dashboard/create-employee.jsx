@@ -362,7 +362,7 @@ function Submit() {
 function AutoReset({ autoReset, SetAutoReset }) {
   return (
     <div className="flex gap-2 relative group">
-      auto reset
+      <span className="font-light">auto reset</span>
       <input
         type="checkbox"
         checked={autoReset}

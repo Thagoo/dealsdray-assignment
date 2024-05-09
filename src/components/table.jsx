@@ -57,7 +57,7 @@ export default function EmployeeTable({ employeeData }) {
 
   return (
     <>
-      <div className="flex justify-between px-2 mb-2 ">
+      <div className="flex justify-between px-2 mb-2">
         <div className="flex justify-between w-full">
           <h1 className="hidden md:block text-xl text-accent-foreground font-semibold">
             Employees
@@ -79,10 +79,10 @@ export default function EmployeeTable({ employeeData }) {
           </div>
         </div>
       </div>
-      <div className="w-full max-h-screen overflow-x-auto space-y-2">
+      <div className="w-full min-h-[50vh] max-h-[80vh] overflow-x-auto space-y-2 border border-accent">
         <table className="w-full text-xs md:text-sm text-left text-gray-500 dark:text-gray-400 text-ellipsis whitespace-nowrap ">
-          <thead className="sticky top-0 text-xs text-gray-700  bg-background dark:text-gray-400  ">
-            <tr>
+          <thead className="sticky top-0 text-xs text-gray-700  bg-background dark:text-gray-400 border ">
+            <tr className=" border-b-2">
               {employeeDataHeaders.map((header, i) => (
                 <th
                   key={i}
@@ -99,7 +99,7 @@ export default function EmployeeTable({ employeeData }) {
             {employees.map((item, i) => (
               <tr
                 key={i}
-                className="border-b bg-background border border-accent cursor-pointer"
+                className="border-b bg-background border cursor-pointer"
               >
                 <td className="px-4 py-4">{item._id}</td>
                 <td className="px-4 py-4">

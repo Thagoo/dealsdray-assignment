@@ -4,9 +4,5 @@ import { fetchEmployees } from "@/lib/data";
 export default async function Home() {
   const employees = await fetchEmployees();
 
-  return (
-    <div>
-      <EmployeeTable employeeData={employees} />
-    </div>
-  );
+  return <EmployeeTable employeeData={employees} />;
 }
